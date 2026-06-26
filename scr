@@ -1,0 +1,835 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Random;
+
+public class SmartFitnessApp {
+    public static void main(String[] args) {
+        new SmartFitnessApp().showIntroPage();
+    }
+
+    void showIntroPage() {
+        JFrame frame = new JFrame("Smart Fitness App");
+        frame.setSize(500, 400);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(null);
+        frame.getContentPane().setBackground(new Color(245, 245, 245));
+
+        // Title
+        JLabel title = new JLabel("Smart Fitness App");
+        title.setBounds(100, 30, 300, 40);
+        title.setFont(new Font("Arial", Font.BOLD, 28));
+        title.setHorizontalAlignment(SwingConstants.CENTER);
+        title.setForeground(new Color(34, 45, 65));
+        frame.add(title);
+
+        // Subtitle
+        JLabel subtitle = new JLabel("Track. Train. Transform.");
+        subtitle.setBounds(170, 70, 250, 25);
+        subtitle.setFont(new Font("SansSerif", Font.ITALIC, 16));
+        title.setHorizontalAlignment(SwingConstants.CENTER);
+        subtitle.setForeground(new Color(80, 80, 80));
+        frame.add(subtitle);
+
+                JFrame frameimg = new JFrame("Image in JLabel");
+                frameimg.setSize(400, 350);
+                frameimg.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frameimg.setLayout(null);
+
+                // Create image label
+                JLabel imgLabel = new JLabel();
+                imgLabel.setBounds(170, 100, 150, 150);
+                imgLabel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+                imgLabel.setHorizontalAlignment(SwingConstants.CENTER);
+                frame.add(imgLabel);
+
+                // Load and scale image
+                ImageIcon originalIcon = new ImageIcon("C:\\Users\\DC\\OneDrive\\Desktop\\download.jpg"); // 🔁 Replace with your image path
+                Image scaledImage = originalIcon.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+                ImageIcon scaledIcon = new ImageIcon(scaledImage);
+
+                // Set the image icon to the label
+                imgLabel.setIcon(scaledIcon);
+                imgLabel.setText(""); // Remove default text
+
+                // Show frame
+                frame.setVisible(true);
+
+
+        // Register Button
+        JButton registerBtn = new JButton("Register");
+        registerBtn.setBounds(100, 280, 120, 40);
+        registerBtn.setBackground(new Color(100, 200, 150));
+        registerBtn.setForeground(Color.WHITE);
+        registerBtn.setFont(new Font("Arial", Font.BOLD, 14));
+        registerBtn.setFocusPainted(false);
+        frame.add(registerBtn);
+
+        // Login Button
+        JButton loginBtn = new JButton("Login");
+        loginBtn.setBounds(260, 280, 120, 40);
+        loginBtn.setBackground(new Color(100, 149, 237));
+        loginBtn.setForeground(Color.WHITE);
+        loginBtn.setFont(new Font("Arial", Font.BOLD, 14));
+        loginBtn.setFocusPainted(false);
+        frame.add(loginBtn);
+
+        // Button Actions (example)
+        registerBtn.addActionListener(e -> {
+            frame.dispose();
+            showRegisterForm();
+        });
+
+        loginBtn.addActionListener(e -> {
+            frame.dispose();
+            showLoginForm();
+        });
+
+        frame.setLocationRelativeTo(null); // Center on screen
+        frame.setVisible(true);
+    }
+
+    // You can link this to your existing register/login code
+    void showRegisterForm() {
+      //  JOptionPane.showMessageDialog(null, "Open Registration Form here.");
+        JFrame frame = new JFrame("Smart Fitness Tracker.registration.form");
+
+        JLabel FirstNamelable = new JLabel("First Name : ");
+        FirstNamelable.setBounds(20, 20, 80, 30);
+        JTextField FNField = new JTextField();
+        FNField.setBounds(100, 20, 150, 30);
+
+        JLabel LastNamelable = new JLabel("Last Name : ");
+        LastNamelable.setBounds(20, 60, 80, 30);
+        JTextField LNField = new JTextField();
+        LNField.setBounds(100, 60, 150, 30);
+
+        JLabel dobLabel = new JLabel("Date of Birth:");
+        dobLabel.setBounds(20, 100, 80, 30);
+
+        // Dropdowns for day, month, year
+        String[] days = new String[31];
+        for (int i = 0; i < 31; i++) days[i] = String.valueOf(i + 1);
+
+        String[] months = {
+                "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+        };
+
+        String[] years = new String[100];
+        for (int i = 0; i < 100; i++) years[i] = String.valueOf(2025 - i);
+
+        JComboBox<String> dayBox = new JComboBox<>(days);
+        dayBox.setBounds(120, 100, 45, 25);
+
+        JComboBox<String> monthBox = new JComboBox<>(months);
+        monthBox.setBounds(170, 100, 60, 25);
+
+        JComboBox<String> yearBox = new JComboBox<>(years);
+        yearBox.setBounds(235, 100, 60, 25);
+
+        JLabel Gender = new JLabel("Gender : ");
+        Gender.setBounds(20, 140, 80, 30);
+        String[] gender = {"Male", "Female"};
+        JComboBox<String> GenderBox = new JComboBox<>(gender);
+        GenderBox.setBounds(120, 140, 100, 25);
+
+        JLabel Emaillable = new JLabel("Email : ");
+        Emaillable.setBounds(20, 180, 80, 30);
+        JTextField EmailField = new JTextField();
+        EmailField.setBounds(100, 180, 150, 30);
+
+        JLabel passlable = new JLabel("Password : ");
+        passlable.setBounds(20, 220, 80, 30);
+        JPasswordField passField = new JPasswordField();
+        passField.setBounds(100, 220, 150, 30);
+
+        JButton RegistrationButton = new JButton("Registration");
+        RegistrationButton.setBounds(100, 260, 170, 30);
+        //RegistrationButton.setBackground(new Color(100, 149, 237));
+
+        JLabel msgLabel = new JLabel();
+        msgLabel.setBounds(100, 300, 150, 30);
+
+
+        RegistrationButton.addActionListener(e -> {
+            String Firstname = FNField.getText();
+            String Lastname = LNField.getText();
+            String email = EmailField.getText();
+            String pass = new String(passField.getPassword());
+            if (Firstname.isEmpty() || Lastname.isEmpty() || email.isEmpty() || pass.isEmpty()) {
+                msgLabel.setText("Please fill all fields.");
+                return;
+            }
+
+            try (FileWriter fw = new FileWriter("recordlog.txt", true)) {
+                fw.write(Firstname + "," + Lastname + "," + email + "," + pass + "\n");
+                msgLabel.setText("Registered successfully!");
+                frame.dispose();
+                showIntroPage();
+            } catch (IOException ex) {
+                msgLabel.setText("Error saving user.");
+                ex.printStackTrace();
+            }
+
+            //frame.dispose();
+            showIntroPage();
+        });
+
+        frame.add(FirstNamelable);
+        frame.add(FNField);
+        frame.add(LastNamelable);
+        frame.add(LNField);
+        frame.add(dobLabel);
+        frame.add(dayBox);
+        frame.add(monthBox);
+        frame.add(yearBox);
+        frame.add(Gender);
+        frame.add(GenderBox);
+        frame.add(Emaillable);
+        frame.add(EmailField);
+        frame.add(passlable);
+        frame.add(passField);
+        frame.add(RegistrationButton);
+        frame.add(msgLabel);
+
+        frame.setSize(400, 500);
+        frame.getContentPane().setBackground(new Color(242, 200, 243));
+        frame.setLayout(null);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+        frame.getContentPane().setBackground(new Color(245, 245, 245));
+        frame.setLocationRelativeTo(null);
+
+
+    }
+
+
+    void showLoginForm() {
+       // JOptionPane.showMessageDialog(null, "Open Login Form here.");
+        JFrame frame = new JFrame("Login");
+        JLabel emailLabel = new JLabel("Email:");
+        JLabel passLabel = new JLabel("Password:");
+        JTextField emailField = new JTextField();
+        JPasswordField passField = new JPasswordField();
+        JButton loginBtn = new JButton("Login");
+        JLabel msgLabel = new JLabel();
+
+        emailLabel.setBounds(20, 20, 80, 25);
+        emailField.setBounds(100, 20, 150, 25);
+        passLabel.setBounds(20, 60, 80, 25);
+        passField.setBounds(100, 60, 150, 25);
+        loginBtn.setBounds(100, 100, 100, 30);
+      //  loginBtn.setBackground(new Color(100, 149, 237));
+        msgLabel.setBounds(20, 140, 300, 25);
+
+        loginBtn.addActionListener(e -> {
+            String email = emailField.getText();
+            String pass = new String(passField.getPassword()
+            );
+            boolean found = false;
+
+            try (BufferedReader reader = new BufferedReader(new FileReader("recordlog.txt"))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    String[] parts = line.split(",");
+                    if (parts.length >= 4 && parts[2].equals(email) && parts[3].equals(pass)) {
+                        found = true;
+                        break;
+                    }
+                }
+            } catch (IOException ex) {
+                msgLabel.setText("Error reading file.");
+                ex.printStackTrace();
+            }
+
+            if (found) {
+                msgLabel.setText("Login successful!");
+                showmainmenu();
+            } else {
+                msgLabel.setText("Invalid email or password.");
+                showIntroPage();
+            }
+        });
+
+        frame.add(emailLabel);
+        frame.add(emailField);
+        frame.add(passLabel);
+        frame.add(passField);
+        frame.add(loginBtn);
+        frame.add(msgLabel);
+
+        frame.setSize(350, 220);
+    //    frame.getContentPane().setBackground(new Color(242, 200, 243));
+        frame.setLayout(null);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+        frame.setLocationRelativeTo(null);
+    }
+
+    void showmainmenu() {
+        // JOptionPane.showMessageDialog(null,"welcome to main menu");
+        JFrame frame = new JFrame("main menu");
+        frame.setSize(500, 400);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(null);
+        //frame.getContentPane().setBackground(new Color(245, 245, 245));
+        frame.getContentPane().setBackground(new Color(242, 200, 243));
+
+        JLabel title = new JLabel("Smart Fitness Tracker");
+        title.setBounds(80, 20, 300, 30);
+        title.setFont(new Font("Arial", Font.BOLD, 28));
+        title.setHorizontalAlignment(SwingConstants.CENTER);
+        title.setForeground(new Color(34, 45, 65));
+
+        JLabel msglable = new JLabel();
+        msglable.setText("Hi!welcome to smart fitness");
+        msglable.setBounds(20, 70, 300, 30);
+
+        JButton BMI = new JButton("BMI");
+        BMI.setBounds(20, 125, 60, 30);
+        BMI.setBackground(new Color(255, 107, 107));
+
+        BMI.addActionListener(e -> {
+            frame.dispose();
+            BMI();
+        });
+
+        JButton caloriesButton = new JButton("Calories");
+        caloriesButton.setBounds(100, 125, 100, 30);
+        caloriesButton.setBackground(new Color(255, 107, 107));
+        caloriesButton.addActionListener(e -> {
+            frame.dispose();
+            caloriescalc();
+        });
+
+        JButton workoutPlanButton = new JButton("Workout Plan");
+        workoutPlanButton.setBounds(220, 125, 120, 30);
+        workoutPlanButton.setBackground(new Color(255, 107, 107));
+        workoutPlanButton.addActionListener(e -> {
+            frame.dispose();
+            workoutplansuggestion();
+        });
+        JButton wellnessTipsButton = new JButton("Wellness Tips");
+        wellnessTipsButton.setBounds(360, 125, 120, 30);
+        wellnessTipsButton.setBackground(new Color(255, 107, 107));
+        wellnessTipsButton.addActionListener(e -> {
+            frame.dispose();
+            wellnesstips();
+        });
+        JButton feedback = new JButton("Feedback");
+        feedback.setBounds(250, 200, 120, 30);
+        feedback.setBackground(new Color(255, 107, 107));
+        feedback.addActionListener(e -> {
+            frame.dispose();
+            feedback();
+        });
+        JButton diet= new JButton("Diet plan");
+        diet.setBounds(90, 200, 120, 30);
+        diet.setBackground(new Color(255, 107, 107));
+        diet.addActionListener(e -> {
+            frame.dispose();
+            dietsugg();
+        });
+
+        JButton logout= new JButton("logout");
+        logout.setBounds(170, 280, 120, 30);
+        logout.setBackground(new Color(255, 107, 107));
+        logout.addActionListener(e -> {
+            System.exit(0);
+        });
+
+
+
+
+
+        frame.add(title);
+        frame.add(msglable);
+        frame.add(BMI);
+        frame.add(workoutPlanButton);
+        frame.add(caloriesButton);
+        frame.add(wellnessTipsButton);
+        frame.add(feedback);
+        frame.add(diet);
+        frame.add(logout);
+        frame.setVisible(true);
+        frame.setLocationRelativeTo(null);
+
+    }
+
+    void BMI() {
+        JFrame frame = new JFrame("BMI Calculator");
+        frame.setSize(400, 300);
+        frame.getContentPane().setBackground(new Color(242, 200, 243));
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(null);
+        JLabel weightLabel = new JLabel("Weight (kg):");
+        weightLabel.setBounds(20, 20, 100, 30);
+        JTextField weightField = new JTextField();
+        weightField.setBounds(120, 20, 150, 30);
+        JLabel heightLabel = new JLabel("Height (cm):");
+        heightLabel.setBounds(20, 60, 100, 30);
+        JTextField heightField = new JTextField();
+        heightField.setBounds(120, 60, 150, 30);
+        JButton calculateButton = new JButton("Calculate");
+        calculateButton.setBounds(80, 100, 120, 30);
+        calculateButton.setBackground(new Color(100, 149, 237));
+        JLabel resultLabel = new JLabel("Result:");
+        resultLabel.setBounds(20, 140, 250, 30);
+        JButton mainmenu=new JButton("Main Menu");
+        mainmenu.setBounds(150,170,120,30);
+        mainmenu.setBackground(new Color(100, 149, 237));
+
+        calculateButton.addActionListener(e -> {
+            try {
+                double weight = Double.parseDouble(weightField.getText());
+                double heightCm = Double.parseDouble(heightField.getText());
+                double height = heightCm / 100; // convert cm to meters
+                double bmi = weight / (height * height);
+                String status;
+                if (bmi < 18.5) {
+                    status = "Underweight";
+                } else if (bmi < 24.9) {
+                    status = "Normal weight";
+                } else if (bmi < 29.9) {
+                    status = "Overweight";
+                } else {
+                    status = "Obese";
+                }
+                resultLabel.setText(String.format("BMI: %.2f - %s", bmi, status));
+            } catch (NumberFormatException ex) {
+                resultLabel.setText("Please enter valid numbers!");
+            }
+        });
+
+        mainmenu.addActionListener(e -> {
+            frame.dispose();
+            showmainmenu();
+        });
+
+        frame.add(weightLabel);
+        frame.add(weightField);
+        frame.add(heightLabel);
+        frame.add(heightField);
+        frame.add(calculateButton);
+        frame.add(resultLabel);
+        frame.add(mainmenu);
+        frame.setLocationRelativeTo(null); // Center on screen
+        frame.setVisible(true);
+    }
+
+    void caloriescalc() {
+        JFrame frame = new JFrame("Calories Calculator");
+        frame.setSize(400, 400);
+        frame.getContentPane().setBackground(new Color(242, 200, 243));
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(null);
+        JLabel heading = new JLabel("CALORIES CALCULATOR");
+        heading.setFont(new Font("Segoe UI", Font.BOLD, 24));
+        heading.setBounds(50, 20, 300, 30);
+        frame.add(heading);
+        JLabel weightLabel = new JLabel("Weight (kg):");
+        weightLabel.setBounds(20, 70, 100, 30);
+        JTextField weightField = new JTextField();
+        weightField.setBounds(150, 70, 150, 30);
+        JLabel durationLabel = new JLabel("Duration (min):");
+        durationLabel.setBounds(20, 110, 120, 30);
+        JTextField durationField = new JTextField();
+        durationField.setBounds(150, 110, 150, 30);
+
+        JLabel workoutTypeLabel = new JLabel("Workout Type:");
+        workoutTypeLabel.setBounds(20, 150, 120, 30);
+        JComboBox<String> activityDropdown = new JComboBox<>(new String[]{"Walking", "Running", "Cycling", "Yoga", "Weight Training"});
+        activityDropdown.setBounds(150, 150, 150, 30);
+        JButton calculateButton = new JButton("Calculate");
+        calculateButton.setBounds(100, 200, 120, 30);
+        calculateButton.setBackground(new Color(100, 149, 237));
+        JLabel resultLabel = new JLabel("Result:");
+        resultLabel.setBounds(20, 240, 300, 30);
+        JButton mainmenu=new JButton("Main Menu");
+        mainmenu.setBounds(250,270,120,30);
+        mainmenu.setBackground(new Color(100, 149, 237));
+        mainmenu.addActionListener(e -> {
+            frame.dispose();
+            showmainmenu();
+        });
+        calculateButton.addActionListener(e -> {
+            try {
+                double weight = Double.parseDouble(weightField.getText().trim());
+                double duration = Double.parseDouble(durationField.getText().trim());
+                String activity = activityDropdown.getSelectedItem().toString().trim();
+                double met = 0;
+                switch (activity) {
+                    case "Walking":
+                        met = 3.5;
+                        break;
+                    case "Running":
+                        met = 7.0;
+                        break;
+                    case "Cycling":
+                        met = 6.0;
+                        break;
+                    case "Yoga":
+                        met = 2.5;
+                        break;
+                    case "Weight Training":
+                        met = 5.0;
+                        break;
+                }
+                double calories = (met * weight * duration) / 60;
+                resultLabel.setText(String.format("Calories Burned: %.2f", calories));
+            } catch (NumberFormatException ex) {
+                resultLabel.setText("Please enter valid numbers!");
+            }
+        });
+        frame.add(weightLabel);
+        frame.add(weightField);
+        frame.add(durationLabel);
+        frame.add(durationField);
+        frame.add(workoutTypeLabel);
+        frame.add(activityDropdown);
+        frame.add(calculateButton);
+        frame.add(resultLabel);
+        frame.add(mainmenu);
+        frame.setLocationRelativeTo(null); // Center on screen
+        frame.setVisible(true);
+    }
+
+    void workoutplansuggestion() {
+        JFrame frame = new JFrame("Workout Plan Suggestions");
+        frame.setSize(400, 400);
+        frame.getContentPane().setBackground(new Color(242, 200, 243));
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(null);
+        JLabel goalLabel = new JLabel("Select Goal:");
+        goalLabel.setBounds(20, 20, 100, 30);
+        JComboBox<String> goalDropdown = new JComboBox<>(new String[]{"Weight Loss", "Muscle Gain", "Endurance"});
+        goalDropdown.setBounds(150, 20, 150, 30);
+        JLabel levelLabel = new JLabel("Select Level:");
+        levelLabel.setBounds(20, 70, 100, 30);
+        JComboBox<String> levelDropdown = new JComboBox<>(new String[]{"Beginner", "Intermediate", "Advanced"});
+        levelDropdown.setBounds(150, 70, 150, 30);
+
+        JButton suggestionButton = new JButton("Get Suggestion");
+        suggestionButton.setBounds(100, 120, 150, 30);
+        suggestionButton.setBackground(new Color(100, 149, 237));
+        JTextArea planArea = new JTextArea();
+        planArea.setBounds(20, 190, 350, 80);
+        planArea.setEditable(false);
+        JScrollPane scrollPane = new JScrollPane(planArea);
+        scrollPane.setBounds(20, 190, 350, 80);
+        JButton mainmenu=new JButton("Main Menu");
+        mainmenu.setBounds(190,300,120,30);
+        mainmenu.setBackground(new Color(100, 149, 237));
+        mainmenu.addActionListener(e -> {
+            frame.dispose();
+            showmainmenu();
+        });
+        suggestionButton.addActionListener(e -> {
+            String goal = (String) goalDropdown.getSelectedItem();
+            String level = (String) levelDropdown.getSelectedItem();
+            String plan = "";
+            if (level.equals("Beginner")) {
+                if (goal.equals("Weight Loss")) {
+                    plan = "30 min cardio + 15 min bodyweight exercises";
+                } else if (goal.equals("Muscle Gain")) {
+                    plan = "3 days strength training + 2 days light cardio";
+                } else if (goal.equals("Endurance")) {
+                    plan = "40 min running + stretching";
+                }
+            } else if (level.equals("Intermediate")) {
+                if (goal.equals("Weight Loss")) {
+                    plan = "40 min HIIT + 20 min strength training";
+                } else if (goal.equals("Muscle Gain")) {
+                    plan = "5 days strength training, split routine";
+                } else if (goal.equals("Endurance")) {
+                    plan = "60 min cycling or swimming";
+                }
+            } else if (level.equals("Advanced")) {
+                if (goal.equals("Weight Loss")) {
+                    plan = "1 hour HIIT + 30 min strength + core workouts";
+                } else if (goal.equals("Muscle Gain")) {
+                    plan = "6 days strength training, heavy weights";
+                } else if (goal.equals("Endurance")) {
+                    plan = "90 min mixed cardio (running, swimming, cycling)";
+                }
+            }
+            planArea.setText(plan);
+        });
+        frame.add(goalLabel);
+        frame.add(goalDropdown);
+        frame.add(levelLabel);
+        frame.add(levelDropdown);
+        frame.add(suggestionButton);
+        frame.add(scrollPane);
+        frame.add(mainmenu);
+        frame.setLocationRelativeTo(null); // Center on screen
+        frame.setVisible(true);
+
+    }
+    void wellnesstips(){
+        JFrame frame = new JFrame("Wellness Tips");
+        frame.setSize(500, 400);
+        frame.getContentPane().setBackground(new Color(242, 200, 243));
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(null);
+
+        JLabel wellnessLabel = new JLabel("HEALTH AND WELLNESS TIPS");
+        wellnessLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
+        wellnessLabel.setBounds(50, 20, 300, 30);
+        frame.add(wellnessLabel);
+
+        JLabel wellnessTipLabel = new JLabel("Click the button for a Wellness tip");
+        wellnessTipLabel.setFont(new Font("Calibri", Font.BOLD, 18));
+        wellnessTipLabel.setBounds(50, 60, 300, 30);
+        frame.add(wellnessTipLabel);
+
+        JTextArea jTextArea1 = new JTextArea();
+        jTextArea1.setBackground(new Color(255, 204, 204));
+        jTextArea1.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        jTextArea1.setEditable(false);
+        jTextArea1.setBounds(50, 100, 400, 100);
+
+        JScrollPane jScrollPane1 = new JScrollPane(jTextArea1);
+        jScrollPane1.setBounds(50, 100, 400, 100);
+        frame.add(jScrollPane1);
+
+        JButton showTipButton = new JButton("SHOW TIP");
+        showTipButton.setBackground(new Color(0, 204, 102));
+        showTipButton.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        showTipButton.setBounds(150, 220, 200, 30);
+
+        JButton mainmenu=new JButton("Main Menu");
+        mainmenu.setBounds(190,300,120,30);
+        mainmenu.setBackground(new Color(100, 149, 237));
+        mainmenu.addActionListener(e -> {
+            frame.dispose();
+            showmainmenu();
+        });
+        frame.add(mainmenu);
+
+        frame.add(showTipButton);
+        String[] tips = {
+                "Drink at least 8 glasses of water daily.",
+                "Take a 10-minute walk every day to boost circulation.",
+                "Include more fruits and vegetables in your diet.",
+                "Practice deep breathing exercises to reduce stress.",
+                "Get 7-8 hours of quality sleep every night.",
+                "Avoid excessive screen time to protect your eyes.",
+                "Stretch your body regularly to maintain flexibility.",
+                "Limit your intake of processed and sugary foods.",
+                "Spend time outdoors to improve mental health.",
+                "Practice mindfulness or meditation for relaxation."
+        };
+        Random random = new Random();
+        showTipButton.addActionListener(e -> {
+            int index = random.nextInt(tips.length);
+            jTextArea1.setText(tips[index]);
+        });
+        frame.setLocationRelativeTo(null); // Center on screen
+        frame.setVisible(true);
+    }
+
+    void feedback(){
+        JFrame frame = new JFrame("Feedback");
+        frame.setSize(400, 350);
+        frame.getContentPane().setBackground(new Color(242, 200, 243));
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(null);
+        JLabel feedbackLabel = new JLabel("Your Feedback:");
+        feedbackLabel.setBounds(20, 20, 100, 30);
+        JTextArea feedbackArea = new JTextArea();
+        feedbackArea.setBounds(20, 60, 350, 100);
+        feedbackArea.setLineWrap(true);
+        feedbackArea.setWrapStyleWord(true);
+        JLabel ratingLabel = new JLabel("Rate us (1 to 5):");
+        ratingLabel.setBounds(20, 180, 100, 30);
+        JComboBox<String> ratingBox = new JComboBox<>(new String[]{"1", "2", "3", "4", "5"});
+        ratingBox.setBounds(130, 180, 50, 30);
+        JButton submitButton = new JButton("Submit");
+        submitButton.setBounds(20, 220, 100, 30);
+        submitButton.setBackground(new Color(100, 149, 237));
+        JLabel statusLabel = new JLabel();
+        statusLabel.setBounds(20, 260, 200, 30);
+        JButton mainmenu=new JButton("Main Menu");
+        mainmenu.setBounds(250,220,120,30);
+        mainmenu.setBackground(new Color(100, 149, 237));
+        mainmenu.addActionListener(e -> {
+            frame.dispose();
+            showmainmenu();
+        });
+        frame.add(mainmenu);
+        submitButton.addActionListener(e -> {
+            String feedback = feedbackArea.getText().trim();
+            String rating = (String) ratingBox.getSelectedItem();
+            if (feedback.isEmpty()) {
+                statusLabel.setText("Please write some feedback.");
+            } else {
+                // Here you can save feedback to a file or database
+                try (FileWriter fw = new FileWriter("feedback.txt", true)) {
+                    fw.write("Rating: " + rating + ", Feedback: " + feedback + "\n");
+                    statusLabel.setText("Thank you for your feedback!");
+                } catch (IOException ex) {
+                    statusLabel.setText("Error saving feedback.");
+                    ex.printStackTrace();
+                }
+            }
+        });
+        frame.add(feedbackLabel);
+        frame.add(feedbackArea);
+        frame.add(ratingLabel);
+        frame.add(ratingBox);
+        frame.add(submitButton);
+        frame.add(statusLabel);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    }
+    void dietsugg(){
+
+                // Predefined Q&A (use LinkedHashMap to preserve insertion order)
+                Map<String, String> qaMap = new LinkedHashMap<>();
+                qaMap.put("keto plan?", "Day 1" + "\n"+
+                        "Breakfast: Scrambled eggs with spinach & butter\n" +
+                        " Lunch: Grilled chicken & avocado salad\n" +
+                        " Dinner: Baked salmon with zucchini\n" +
+                        " Snack: 10 almond"+"\n"
+                        +"Day 2"+"\n"+
+                        "Breakfast: Chia pudding (almond milk, chia, stevia)"+"\n"
+                        +"Lunch: Egg salad in lettuce wraps"+"\n"
+                        +"Dinner: Beef stir-fry (broccoli, coconut oil)"+"\n"+
+                        " Snack: Cheese stick"+"\n"+
+                        "Day 3"+"\n"
+                        +"Breakfast: Bulletproof coffee"+"\n"+
+                        " Lunch: Tuna salad with mayo & cucumber"+"\n"+
+                        " Dinner: Chicken with kale & mushrooms"+"\n"+
+                        "Snack: Macadamia nuts"+"\n" +
+                        "Day 4"+"\n"+
+                        "Breakfast: Mushroom & cheese omelet"+"\n"+
+                        "Lunch: Turkey & cheese roll-ups"+"\n"+
+                        "Dinner: Garlic shrimp + zucchini noodles"+"\n"+
+                        "Snack: Cucumber with guac");
+                qaMap.put("Low carb?", "Day 1\n" +
+                        "Breakfast: Greek yogurt (unsweetened) + chia + berries\n" +
+                        "Lunch: Grilled chicken salad (olive oil dressing)\n" +
+                        "Dinner: Baked salmon + steamed broccoli + small sweet potato\n" +
+                        "Day 2\n" +
+                        "Breakfast: 2 boiled eggs + 1 slice whole grain toast\n" +
+                        "Lunch: Turkey lettuce wraps + side of carrot sticks\n" +
+                        "Dinner: Stir-fried tofu or chicken + veggies (low-sugar sauce)\n" +
+                        "Day 3\n" +
+                        "Breakfast: Smoothie (unsweetened almond milk, spinach, protein powder)\n" +
+                        "Lunch: Tuna salad + sliced cucumber\n" +
+                        "Dinner: Grilled shrimp + cauliflower rice + sautéed greens\n" +
+                        "Day 4\n" +
+                        "Breakfast: Cottage cheese + walnuts + a few berries\n" +
+                        "Lunch: Chicken breast + green beans + quinoa (small portion)\n" +
+                        "Dinner: Turkey meatballs + zucchini noodles");
+                qaMap.put("High protein ?", "Day 1\n" +
+                        "Breakfast: Scrambled eggs (2) + cottage cheese\n" +
+                        "Lunch: Grilled chicken breast + quinoa + spinach\n" +
+                        "Dinner: Baked salmon + broccoli\n" +
+                        "Snack: Greek yogurt (unsweetened)\n" +
+                        "Day 2\n" +
+                        "Breakfast: Protein smoothie (whey, almond milk, banana)\n" +
+                        "Lunch: Turkey lettuce wraps + boiled egg\n" +
+                        "Dinner: Grilled tofu or shrimp + stir-fried veggies\n" +
+                        "Snack: Handful of almonds\n" +
+                        "Day 3\n" +
+                        "Breakfast: Boiled eggs (2) + Greek yogurt\n" +
+                        "Lunch: Tuna salad + mixed greens\n" +
+                        "Dinner: Lean beef + roasted vegetables\n" +
+                        "Snack: Cottage cheese\n" +
+                        "Day 4\n" +
+                        "Breakfast: Omelet (3 egg whites + veggies + cheese)\n" +
+                        "Lunch: Grilled chicken + chickpeas + cucumber\n" +
+                        "Dinner: White fish + green beans\n" +
+                        "Snack: Protein bar (low sugar)\n");
+                qaMap.put("vegan diet?", "Day 1\n" +
+                        "Breakfast: Oatmeal with almond milk, chia seeds, and berries\n" +
+                        "Lunch: Chickpea salad (cucumber, tomato, lemon, olive oil)\n" +
+                        "Dinner: Lentil curry + brown rice\n" +
+                        "Snack: Apple + peanut butter\n" +
+                        "Day 2\n" +
+                        "Breakfast: Green smoothie (spinach, banana, flaxseed, almond milk)\n" +
+                        "Lunch: Hummus + veggie wrap (whole grain)\n" +
+                        "Dinner: Tofu stir-fry + quinoa\n" +
+                        "Snack: Handful of almonds\n" +
+                        "Day 3\n" +
+                        "Breakfast: Vegan protein smoothie (protein powder + oat milk + berries)\n" +
+                        "Lunch: Lentil soup + side salad\n" +
+                        "Dinner: Grilled veggie bowl (zucchini, chickpeas, sweet potato)\n" +
+                        "Snack: Carrot sticks + tahini dip\n" +
+                        "Day 4\n" +
+                        "Breakfast: Whole grain toast + avocado + tomato\n" +
+                        "Lunch: Buddha bowl (brown rice, tofu, kale, tahini dressing)\n" +
+                        "Dinner: Vegan chili (black beans, corn, tomatoes)\n" +
+                        "Snack: Banana + sunflower seeds\n");
+
+                JFrame frame = new JFrame("AI Chat - Click a Question");
+                frame.setSize(600, 500);
+                frame.getContentPane().setBackground(new Color(242, 200, 243));
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setLayout(new BorderLayout());
+
+                // Chat area
+                JTextArea chatArea = new JTextArea();
+                chatArea.setBackground(new Color(242, 200, 243));
+                chatArea.setEditable(false);
+                chatArea.setLineWrap(true);
+                chatArea.setWrapStyleWord(true);
+                JScrollPane scrollPane = new JScrollPane(chatArea);
+
+                // Bottom panel for buttons
+                JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
+                buttonPanel.setBorder(BorderFactory.createTitledBorder("Click a question"));
+        JButton mainmenu=new JButton("Main Menu");
+        mainmenu.setBounds(450,400,120,30);
+        mainmenu.setBackground(new Color(100, 149, 237));
+        mainmenu.addActionListener(e -> {
+            frame.dispose();
+            showmainmenu();
+        });
+        frame.add(mainmenu);
+
+
+        for (String question : qaMap.keySet()) {
+                    JButton questionButton = new JButton(question);
+                    questionButton.setFont(new Font("SansSerif", Font.PLAIN, 12));
+                    questionButton.setBackground(new Color(100, 149, 237));
+                    questionButton.setFocusable(false);
+                    questionButton.addActionListener((ActionEvent e) -> {
+                        chatArea.append("You: " + question + "\n");
+                        String answer = qaMap.get(question);
+                        chatArea.append("AI: " + answer + "\n\n");
+                    });
+                    buttonPanel.add(questionButton);
+                }
+
+                JScrollPane buttonScroll = new JScrollPane(buttonPanel);
+                buttonScroll.setPreferredSize(new Dimension(frame.getWidth(), 100));
+                buttonScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+                buttonScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+
+                // Add components to frame
+                frame.add(scrollPane, BorderLayout.CENTER);
+                frame.add(buttonScroll, BorderLayout.SOUTH);
+
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+            }
+        }
+
+
+
+
+
+
+
+
+
