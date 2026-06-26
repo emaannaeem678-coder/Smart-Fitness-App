@@ -1,0 +1,725 @@
+```html id="o4u9ql"
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Smart Fitness App</title>
+
+<style>
+
+body{
+    font-family: Arial, sans-serif;
+    background:#f4f4f4;
+    margin:0;
+    padding:0;
+}
+
+.container{
+    width:80%;
+    margin:20px auto;
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0px 0px 10px gray;
+}
+
+h1,h2,h3{
+    text-align:center;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border:none;
+    border-radius:5px;
+    background:#28a745;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#218838;
+}
+
+input,select,textarea{
+    width:100%;
+    padding:10px;
+    margin:10px 0;
+    border-radius:5px;
+    border:1px solid #ccc;
+}
+
+.section{
+    display:none;
+}
+
+.result{
+    margin-top:10px;
+    padding:10px;
+    background:#e9ecef;
+    border-radius:5px;
+}
+
+.tip-box{
+    background:#fff3cd;
+    padding:15px;
+    border-radius:5px;
+    margin-top:10px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- INTRO PAGE -->
+
+<div id="intro">
+
+<h1>SMART FITNESS APP</h1>
+
+<h3>Track • Train • Transform</h3>
+
+<button onclick="showSection('register')">Register</button>
+
+<button onclick="showSection('login')">Login</button>
+
+</div>
+
+<!-- REGISTER -->
+
+<div id="register" class="section">
+
+<h2>Registration Form</h2>
+
+<input type="text" id="fname" placeholder="First Name">
+
+<input type="text" id="lname" placeholder="Last Name">
+
+<input type="date" id="dob">
+
+<select id="gender">
+<option>Male</option>
+<option>Female</option>
+</select>
+
+<input type="email" id="regEmail" placeholder="Email">
+
+<input type="password" id="regPass" placeholder="Password">
+
+<button onclick="registerUser()">Register</button>
+
+<button onclick="backHome()">Back</button>
+
+<div id="registerMsg" class="result"></div>
+
+</div>
+
+<!-- LOGIN -->
+
+<div id="login" class="section">
+
+<h2>Login</h2>
+
+<input type="email" id="loginEmail" placeholder="Email">
+
+<input type="password" id="loginPass" placeholder="Password">
+
+<button onclick="loginUser()">Login</button>
+
+<button onclick="backHome()">Back</button>
+
+<div id="loginMsg" class="result"></div>
+
+</div>
+
+<!-- MAIN MENU -->
+
+<div id="menu" class="section">
+
+<h2>MAIN MENU</h2>
+
+<button onclick="showSection('bmi')">
+BMI Calculator
+</button>
+
+<button onclick="showSection('calories')">
+Calories Calculator
+</button>
+
+<button onclick="showSection('workout')">
+Workout Plan Suggestions
+</button>
+
+<button onclick="showSection('wellness')">
+Wellness Tips
+</button>
+
+<button onclick="showSection('diet')">
+Diet Suggestions
+</button>
+
+<button onclick="showSection('feedback')">
+Feedback
+</button>
+
+<button onclick="logout()">
+Logout
+</button>
+
+</div>
+
+<!-- BMI -->
+
+<div id="bmi" class="section">
+
+<h2>BMI Calculator</h2>
+
+<input type="number" id="weight" placeholder="Weight (kg)">
+
+<input type="number" id="height" placeholder="Height (cm)">
+
+<button onclick="calculateBMI()">Calculate BMI</button>
+
+<div id="bmiResult" class="result"></div>
+
+<button onclick="showSection('menu')">Main Menu</button>
+
+</div>
+
+<!-- CALORIES -->
+
+<div id="calories" class="section">
+
+<h2>Calories Calculator</h2>
+
+<input type="number" id="calWeight" placeholder="Weight (kg)">
+
+<input type="number" id="duration" placeholder="Duration (minutes)">
+
+<select id="activity">
+<option>Walking</option>
+<option>Running</option>
+<option>Cycling</option>
+<option>Yoga</option>
+<option>Weight Training</option>
+</select>
+
+<button onclick="calculateCalories()">
+Calculate Calories
+</button>
+
+<div id="calorieResult" class="result"></div>
+
+<button onclick="showSection('menu')">Main Menu</button>
+
+</div>
+
+<!-- WORKOUT -->
+
+<div id="workout" class="section">
+
+<h2>Workout Plan Suggestions</h2>
+
+<select id="goal">
+<option>Weight Loss</option>
+<option>Muscle Gain</option>
+<option>Endurance</option>
+</select>
+
+<select id="level">
+<option>Beginner</option>
+<option>Intermediate</option>
+<option>Advanced</option>
+</select>
+
+<button onclick="generateWorkout()">
+Get Workout Plan
+</button>
+
+<div id="workoutResult" class="result"></div>
+
+<button onclick="showSection('menu')">Main Menu</button>
+
+</div>
+
+<!-- WELLNESS -->
+
+<div id="wellness" class="section">
+
+<h2>Health & Wellness Tips</h2>
+
+<button onclick="showTip()">
+Show Wellness Tip
+</button>
+
+<div id="tipResult" class="tip-box"></div>
+
+<button onclick="showSection('menu')">Main Menu</button>
+
+</div>
+
+<!-- DIET -->
+
+<div id="diet" class="section">
+
+<h2>Diet Suggestions</h2>
+
+<select id="dietType">
+
+<option>Keto</option>
+
+<option>Low Carb</option>
+
+<option>High Protein</option>
+
+<option>Vegan</option>
+
+</select>
+
+<button onclick="showDiet()">
+Get Diet Plan
+</button>
+
+<div id="dietResult" class="result"></div>
+
+<button onclick="showSection('menu')">Main Menu</button>
+
+</div>
+
+<!-- FEEDBACK -->
+
+<div id="feedback" class="section">
+
+<h2>Feedback</h2>
+
+<textarea id="feedbackText"
+placeholder="Write your feedback here..."
+rows="6"></textarea>
+
+<select id="rating">
+
+<option>1</option>
+<option>2</option>
+<option>3</option>
+<option>4</option>
+<option>5</option>
+
+</select>
+
+<button onclick="submitFeedback()">
+Submit Feedback
+</button>
+
+<div id="feedbackResult" class="result"></div>
+
+<button onclick="showSection('menu')">Main Menu</button>
+
+</div>
+
+</div>
+
+<script>
+
+/* SHOW SECTION */
+
+function showSection(id){
+
+    let sections =
+    document.getElementsByClassName("section");
+
+    for(let i=0;i<sections.length;i++){
+
+        sections[i].style.display="none";
+    }
+
+    document.getElementById("intro").style.display="none";
+
+    document.getElementById(id).style.display="block";
+}
+
+/* BACK */
+
+function backHome(){
+
+    let sections =
+    document.getElementsByClassName("section");
+
+    for(let i=0;i<sections.length;i++){
+
+        sections[i].style.display="none";
+    }
+
+    document.getElementById("intro").style.display="block";
+}
+
+/* REGISTER */
+
+function registerUser(){
+
+    let fname =
+    document.getElementById("fname").value;
+
+    let lname =
+    document.getElementById("lname").value;
+
+    let dob =
+    document.getElementById("dob").value;
+
+    let gender =
+    document.getElementById("gender").value;
+
+    let email =
+    document.getElementById("regEmail").value;
+
+    let pass =
+    document.getElementById("regPass").value;
+
+    if(fname=="" || lname=="" ||
+       email=="" || pass==""){
+
+        document.getElementById("registerMsg")
+        .innerHTML="Please fill all fields";
+
+        return;
+    }
+
+    let user = {
+
+        fname:fname,
+        lname:lname,
+        dob:dob,
+        gender:gender,
+        email:email,
+        pass:pass
+    };
+
+    localStorage.setItem(email,JSON.stringify(user));
+
+    document.getElementById("registerMsg")
+    .innerHTML="Registration Successful!";
+}
+
+/* LOGIN */
+
+function loginUser(){
+
+    let email =
+    document.getElementById("loginEmail").value;
+
+    let pass =
+    document.getElementById("loginPass").value;
+
+    let data = localStorage.getItem(email);
+
+    if(data==null){
+
+        document.getElementById("loginMsg")
+        .innerHTML="Account not found";
+
+        return;
+    }
+
+    let user = JSON.parse(data);
+
+    if(user.pass===pass){
+
+        showSection("menu");
+    }
+
+    else{
+
+        document.getElementById("loginMsg")
+        .innerHTML="Invalid Password";
+    }
+}
+
+/* BMI */
+
+function calculateBMI(){
+
+    let weight =
+    parseFloat(document.getElementById("weight").value);
+
+    let height =
+    parseFloat(document.getElementById("height").value)/100;
+
+    let bmi =
+    weight/(height*height);
+
+    let status="";
+
+    if(bmi<18.5){
+
+        status="Underweight";
+    }
+
+    else if(bmi<24.9){
+
+        status="Normal";
+    }
+
+    else if(bmi<29.9){
+
+        status="Overweight";
+    }
+
+    else{
+
+        status="Obese";
+    }
+
+    document.getElementById("bmiResult")
+    .innerHTML=
+
+    "BMI = "+bmi.toFixed(2)+
+    " ("+status+")";
+}
+
+/* CALORIES */
+
+function calculateCalories(){
+
+    let weight =
+    parseFloat(document.getElementById("calWeight").value);
+
+    let duration =
+    parseFloat(document.getElementById("duration").value);
+
+    let activity =
+    document.getElementById("activity").value;
+
+    let met=0;
+
+    switch(activity){
+
+        case "Walking":
+            met=3.5;
+            break;
+
+        case "Running":
+            met=7;
+            break;
+
+        case "Cycling":
+            met=6;
+            break;
+
+        case "Yoga":
+            met=2.5;
+            break;
+
+        case "Weight Training":
+            met=5;
+            break;
+    }
+
+    let calories =
+    (met*weight*duration)/60;
+
+    document.getElementById("calorieResult")
+    .innerHTML=
+
+    "Calories Burned = "+
+    calories.toFixed(2);
+}
+
+/* WORKOUT */
+
+function generateWorkout(){
+
+    let goal =
+    document.getElementById("goal").value;
+
+    let level =
+    document.getElementById("level").value;
+
+    let plan="";
+
+    if(level=="Beginner"){
+
+        if(goal=="Weight Loss"){
+
+            plan=
+            "30 min cardio + 15 min bodyweight exercises";
+        }
+
+        else if(goal=="Muscle Gain"){
+
+            plan=
+            "3 days strength training + light cardio";
+        }
+
+        else{
+
+            plan=
+            "40 min running + stretching";
+        }
+    }
+
+    else if(level=="Intermediate"){
+
+        if(goal=="Weight Loss"){
+
+            plan=
+            "40 min HIIT + strength training";
+        }
+
+        else if(goal=="Muscle Gain"){
+
+            plan=
+            "5 days strength training split routine";
+        }
+
+        else{
+
+            plan=
+            "60 min cycling/swimming";
+        }
+    }
+
+    else{
+
+        if(goal=="Weight Loss"){
+
+            plan=
+            "1 hour HIIT + core workouts";
+        }
+
+        else if(goal=="Muscle Gain"){
+
+            plan=
+            "Heavy strength training 6 days";
+        }
+
+        else{
+
+            plan=
+            "90 min mixed cardio";
+        }
+    }
+
+    document.getElementById("workoutResult")
+    .innerHTML=plan;
+}
+
+/* WELLNESS */
+
+function showTip(){
+
+    let tips=[
+
+    "Drink 8 glasses of water daily.",
+
+    "Sleep at least 7-8 hours.",
+
+    "Exercise every day.",
+
+    "Reduce processed foods.",
+
+    "Stretch regularly.",
+
+    "Practice meditation.",
+
+    "Eat more vegetables.",
+
+    "Walk daily.",
+
+    "Reduce screen time.",
+
+    "Practice mindfulness."
+
+    ];
+
+    let random =
+    Math.floor(Math.random()*tips.length);
+
+    document.getElementById("tipResult")
+    .innerHTML=tips[random];
+}
+
+/* DIET */
+
+function showDiet(){
+
+    let type =
+    document.getElementById("dietType").value;
+
+    let plan="";
+
+    if(type=="Keto"){
+
+        plan=
+        "Eggs, Avocado, Chicken, Salmon";
+    }
+
+    else if(type=="Low Carb"){
+
+        plan=
+        "Salad, Fish, Vegetables, Yogurt";
+    }
+
+    else if(type=="High Protein"){
+
+        plan=
+        "Chicken, Eggs, Tuna, Protein Shake";
+    }
+
+    else{
+
+        plan=
+        "Fruits, Lentils, Vegetables, Nuts";
+    }
+
+    document.getElementById("dietResult")
+    .innerHTML=plan;
+}
+
+/* FEEDBACK */
+
+function submitFeedback(){
+
+    let feedback =
+    document.getElementById("feedbackText").value;
+
+    let rating =
+    document.getElementById("rating").value;
+
+    if(feedback==""){
+
+        document.getElementById("feedbackResult")
+        .innerHTML="Please enter feedback";
+
+        return;
+    }
+
+    localStorage.setItem(
+
+        "feedback",
+        feedback+" | Rating: "+rating
+    );
+
+    document.getElementById("feedbackResult")
+    .innerHTML=
+
+    "Thank you for your feedback!";
+}
+
+/* LOGOUT */
+
+function logout(){
+
+    location.reload();
+}
+
+</script>
+
+</body>
+</html>
+```
